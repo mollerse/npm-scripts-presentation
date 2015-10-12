@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>npm.scripts</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style type="text/css">
+
+    @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+    body {
+      font-family: 'Droid Serif';
+    }
+    h1, h2, h3 {
+      font-family: 'Yanone Kaffeesatz';
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+    .remark-slide-content h1 { font-size: 3em; }
+    .remark-slide-content h2 { font-size: 2em; }
+    .remark-slide-content h3 { font-size: 1.6em; }
+    .footnote {
+      position: absolute;
+      bottom: 3em;
+    }
+    li p { line-height: 1.25em; }
+    .red { color: #fa0000; }
+    .large { font-size: 2em; }
+    a, a > code {
+      color: rgb(249, 38, 114);
+      text-decoration: none;
+    }
+    code {
+      background: #e7e8e2;
+      border-radius: 5px;
+    }
+    .remark-code, .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+      background: none;
+      border-radius: 0;
+    }
+    .remark-code-line-highlighted     { background-color: #373832; }
+    .pull-left {
+      float: left;
+      width: 47%;
+    }
+    .pull-right {
+      float: right;
+      width: 47%;
+    }
+    .pull-right ~ p {
+      clear: both;
+    }
+    #slideshow .slide .content code {
+      font-size: 0.8em;
+    }
+    #slideshow .slide .content pre code {
+      font-size: 0.9em;
+      padding: 15px;
+    }
+    .inverse {
+      background: #272822;
+      color: #f3f3f3;
+      text-shadow: 0 0 20px #333;
+    }
+    .inverse h1, .inverse h2 {
+      color: #bada55;
+      line-height: 0.8em;
+    }
+
+    /* Slide-specific styling */
+    #slide-inverse .footnote {
+      bottom: 12px;
+      left: 20px;
+    }
+    #slide-how .slides {
+      font-size: 0.9em;
+      position: absolute;
+      top:  151px;
+      right: 140px;
+    }
+    #slide-how .slides h3 {
+      margin-top: 0.2em;
+    }
+    #slide-how .slides .first, #slide-how .slides .second {
+      padding: 1px 20px;
+      height: 90px;
+      width: 120px;
+      -moz-box-shadow: 0 0 10px #777;
+      -webkit-box-shadow: 0 0 10px #777;
+      box-shadow: 0 0 10px #777;
+    }
+    #slide-how .slides .first {
+      background: #fff;
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      z-index: 1;
+    }
+    #slide-how .slides .second {
+      position: relative;
+      background: #fff;
+      z-index: 0;
+    }
+
+    /* Two-column layout */
+    .left-column {
+      color: #777;
+      width: 20%;
+      height: 92%;
+      float: left;
+    }
+      .left-column h2:last-of-type, .left-column h3:last-child {
+        color: #000;
+      }
+    .right-column {
+      width: 75%;
+      float: right;
+      padding-top: 1em;
+    }
+
+    .remark-slide-number {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+<textarea id="source">
+name: inverse
+layout: true
+class: middle inverse
+---
+# `npm.scripts`
+## Simple task running
+## <a href="http://twitter.com/mollerse">@mollerse</a>
+---
+# En del av npm's Package.json format
+
+Defineres i `Package.json`:
+```json
+{
+  ...
+  scripts: {
+    "test": "node test.js"
+  }
+  ...
+}
+```
+Eksekveres med:
+```bash
+npm run test
+```
+---
+class: middle
+# Task runners vs byggescripts
+En task runner eksekverer byggescripts
+---
+# Hvilket problem løser en task runner?
+Et JS-prosjekt har mange oppgaver knyttet til seg.
+
+Mange problemer fører til mange verktøy, mange verktøy fører til mye kompleksitet.
+
+Kompleksitet vi bare vil forholde oss til når vi definerer tasken, ikke hver
+gang vi skal utføre den.
+---
+.left-column[
+  # Hvorfor?
+]
+---
+.left-column[
+  # Hvorfor?
+]
+.right-column[
+  ## Ett sted å definere alle tasks for prosjektet
+  Samler alle tasks under en felles interface for dokumentasjon og gjenfinning
+
+]
+---
+.left-column[
+  # Hvorfor?
+]
+.right-column[
+  ## Ett sted å definere alle tasks for prosjektet
+  Samler alle tasks under en felles interface for dokumentasjon og gjenfinning
+
+  ## En uniform interface for å kjøre alle tasks
+  Alle tasks kan kjøres ved å bruke den samme CLIen
+
+]
+---
+.left-column[
+  # Hvorfor?
+]
+.right-column[
+  ## Ett sted å definere alle tasks for prosjektet
+  Samler alle tasks under en felles interface for dokumentasjon og gjenfinning
+
+  ## En uniform interface for å kjøre alle tasks
+  Alle tasks kan kjøres ved å bruke den samme CLIen
+
+  ## Abstraherer bort konfigurasjon
+  En task kan endre implementasjon eller byttes helt ut uten at interfacen til
+brukeren av task runnern trenger å tenke på det.
+
+]
+---
+.left-column[
+  # Hvorfor `npm`?
+]
+---
+.left-column[
+  # Hvorfor `npm`?
+]
+.right-column[
+  ## `npm` er allerede en dependency
+  Du trenger ikke installere _enda et verktøy_, du har allerede `npm` i verktøykassa.
+]
+---
+.left-column[
+  # Hvorfor `npm`?
+]
+.right-column[
+  ## `npm` er allerede en dependency
+  Du trenger ikke installere _enda et verktøy_, du har allerede `npm` i verktøykassa.
+
+  ## Utvider `$PATH`
+  `$PATH` blir utvidet med alle kommandoer fra `/node_modules/.bin`, noe som frigjør
+deg fra globale installs
+]
+---
+.left-column[
+  # Hvorfor `npm`?
+]
+.right-column[
+  ## `npm` er allerede en dependency
+  Du trenger ikke installere _enda et verktøy_, du har allerede `npm` i verktøykassa.
+
+  ## Utvider `$PATH`
+  `$PATH` blir utvidet med alle kommandoer fra `/node_modules/.bin`, noe som frigjør
+deg fra globale installs
+
+  ## Hook inn i `npm` lifecycle scripts
+  `npm.scripts` gir deg muligeten til å gjøre ekstra-arbeid ifm andre lifecycle
+scripts som `npm` kjører.
+]
+---
+# Utvidelse av `$PATH`
+```json
+{
+  "scripts": {
+    "build": "gulp build"
+  }
+}
+```
+Her refererer `gulp` til din lokale `gulp`-dependency som ligger i `./node_modules/`
+
+Dette sparer deg for `npm i -g gulp` og å skrive full path til bin'en i scripts-definisjonen (`./node_modules/.bin/gulp`)
+---
+# Lifecycle hooks
+```json
+{
+  "scripts": {
+    "preinstall": "echo \"installing packages\"",
+    "postinstall": "bower install"
+  }
+}
+```
+
+Bruken av `pre`- og `post`-prefixes gir deg muligheten til å kjøre tasks før og
+etter npm's lifecycle scripts.
+
+Disse lifecycle scriptene  (`install`, `publish`, `uninstall`, `version`,
+`test`, `start`, `restart`, `stop`) tilsvarer vanlige npm-kommandoer.
+---
+# Brukerdefinerte tasks
+
+```json
+{
+  "scripts": {
+    "prebuild": "jshint *.js",
+    "postbuild": "npm run test"
+  }
+}
+```
+
+`pre`- og `post`-prefixes fungerer også for brukerdefinerte tasks.
+
+Dette gir oss muligheten til å gjøre en viss grad av orkestrering med kun
+`npm.scripts`.
+
+---
+# Komplekse kommandoer og ekstra args
+
+```json
+{
+  "scripts": {
+    "build": "browserify app.js -t babelify brfs envify -o bundle.js",
+    "build-debug": "npm run build -- -d"
+  }
+}
+```
+
+`npm.scripts` gir deg en mulighet til å gi et mer semantisk korrekt navn til en
+potensielt kompleks kommando. Dette frigjør deg fra implementasjon.red[*].
+
+Du kan også passe ekstra argumenter til en task når du kjører den ved å bruke `[-- <args>]`.
+
+.footnote[.red[*] Dette skal vi se på etterpå]
+---
+# Tasks trenger ikke være node eller JavaScript!
+
+```json
+{
+  "scripts": {
+    "generate-fixtures": "fsi project.domain/GenerateFixtures.fsx",
+    "serve": "iisexpress --path:. --port:2440"
+  }
+}
+```
+
+**NB**: Tenk på kryssplatform. Unngå shell-kommandoer og utils hvis du har behov for
+kryssplattformstøtte. Husk også at paths tolkes anderledes på Windows og *nix.
+---
+# Fin.
+</textarea>
+  <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+  <script>
+    var slideshow = remark.create({highlightStyle: 'monokai'});
+  </script>
+  <style type="text/less">
+  </style>
+</body>
+</html>
